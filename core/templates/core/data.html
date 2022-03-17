@@ -1,0 +1,50 @@
+{% load static %}
+<div id="result" class="row d-flex justify-content-center mt-3">
+  {% for i in all_data %}
+  <form
+  
+    class="file-div col-lg-2 col-md-3 col-sm-4 yos"
+
+  >
+  <div class="dropdown ">
+    <i class="fa fa-ellipsis-v icon " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+
+    <ul style="z-index: 2;" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    
+
+        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Rename</a></li>
+      <li><a class="dropdown-item" href="#"><i class="fa fa-trash"></i> 
+      <input
+      hx-post="{% url 'delete-folder' %}"
+      hx-trigger="click"
+      hx-target="#home-div"
+      name="name" type="text" class="sbtn" value="Delete">
+      </a></li>
+    </ul>
+  </div>
+
+    <input type="hidden" name="folder" value="{{i.name}}" />
+    {% if i.type == "file" %}
+    <img
+      src="{% static 'image/file.png' %}"
+      height="60"
+      width="60"
+      alt="files"
+  
+    />
+
+    {% else %}
+    <img
+      src="{% static 'image/folder.png' %}"
+      height="60"
+      width="60"
+      hx-post="/folder/"
+      hx-trigger="click"
+      hx-target="#home-div"
+      alt="files"
+    />
+    {% endif %}
+    <div class="card-body">{{i.name}}</div>
+  </form>
+  {% endfor %}
+</div>

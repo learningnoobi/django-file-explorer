@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div id="home-div" class="container mt-3">
+
+  <div class="row">
+    <nav class="col-lg-8" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+       <form   
+       method="post"
+       hx-target="#home-div"
+       hx-post="{% url 'go-home' %}"
+       hx-trigger="submit">
+     
+        <input
+        type="submit" 
+        value="home" 
+        class="sbtn" />
+      </li>
+       </form>
+
+        {% if not inHome %}
+          <li hx-post="{% url 'back-folder' %}" 
+          hx-target="#home-div"
+          class="breadcrumb-item active" aria-current="page">
+          Go Back
+        </li>
+          {% endif %}
+        
+
+      </ol>
+    </nav>
+
+
+    <div class="col-lg-4">
+      <button data-bs-toggle="modal" onclick="createFileOrFolder('folder')" 
+      data-bs-target="#modalcreate" class="button-79"><i class="fa fa-folder"></i> Create Folder</button>
+
+      <button data-bs-toggle="modal" onclick="createFileOrFolder('file')"
+        data-bs-target="#modalcreate" class="button-79 extrabtn"><i class="fa fa-file"></i> Create File</button>
+
+{% include 'core/modal.html' %}
+    </div>
+  </div>
+ {% include 'core/data.html' %}
+  
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  const modal_t = document.getElementById("createModal")
+  const submitBtn = document.querySelector("#submitBtn")
+  const nameinput = document.querySelector("#nameinput")
+  const modal =new bootstrap.Modal(document.getElementById("modalcreate"))
+
+
+  function createFileOrFolder(type){
+    modal_t.innerText=`Create ${type}`
+    nameinput.setAttribute("placeholder",`${type} name`)
+    submitBtn.setAttribute("name",type)
+    submitBtn.setAttribute("value",`Create ${type}`)
+  } 
+
+  htmx.on("htmx:afterSwap", (e) => {
+  
+    nameinput.value=""
+    modal.hide()
+    
+  })
+
+
+</script>
+{% endblock script %}
