@@ -1,5 +1,39 @@
 {% load static %}
-<div id="result" class="row d-flex justify-content-center mt-3">
+<div  id="home-div" >
+  <div class="row">
+    <nav class="col-lg-8" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+       <form   
+       method="post"
+       hx-target="#home-div"
+       hx-post="{% url 'go-home' %}"
+       hx-trigger="submit">
+     
+        <input
+        type="submit" 
+        value="home" 
+        class="sbtn" />
+      </li>
+       </form>
+
+       {% if not inHome %}
+       <li hx-post="{% url 'back-folder' %}" 
+       hx-target="#home-div"
+       class="breadcrumb-item active" aria-current="page">
+       Go Back
+     </li>
+       {% endif %}
+       
+
+        
+
+      </ol>
+    </nav>
+
+
+  </div>
+<div  class="row d-flex justify-content-center mt-3">
   {% for i in all_data %}
   <form
   
@@ -47,4 +81,5 @@
     <div class="card-body">{{i.name}}</div>
   </form>
   {% endfor %}
+</div>
 </div>

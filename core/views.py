@@ -31,14 +31,14 @@ def home(request):
             create_file(name)
         val=check_data()
         context ={"all_data":val,"inHome":inHome()}
-        return render(request,'core/home.html',context)
+        return render(request,'core/data.html',context)
 
 class GoHome(View):
     def post (self,request):
         os.chdir(home_path)
         val=check_data()
         context ={"all_data":val,"inHome":inHome()}
-        return render(request,'core/home.html',context)
+        return render(request,'core/data.html',context)
 
 class GetFolderData(View):
 
@@ -49,7 +49,7 @@ class GetFolderData(View):
         all_data = os.listdir()
         val = file_or_folder_dict(all_data)
         context ={"all_data":val,"inHome":inHome()}
-        return render(request,'core/home.html',context)
+        return render(request,'core/data.html',context)
 
 
 class GoBackFolder(View):
@@ -58,7 +58,7 @@ class GoBackFolder(View):
         all_data = os.listdir()
         val = file_or_folder_dict(all_data)
         context ={"all_data":val,"inHome":inHome()}
-        return render(request,'core/home.html',context)
+        return render(request,'core/data.html',context)
 
 class DeleteFileFolder(View):
 
@@ -70,8 +70,7 @@ class DeleteFileFolder(View):
             shutil.rmtree(path)
         if os.path.isfile(path):
             os.remove(path)
-        # os.chdir('..')
         all_data = os.listdir()
         val = file_or_folder_dict(all_data)
         context ={"all_data":val,"inHome":inHome()}
-        return render(request,'core/home.html',context)
+        return render(request,'core/data.html',context)
