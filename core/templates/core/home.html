@@ -26,7 +26,8 @@
   {% include 'core/data.html' %}
 </div>
 
-{% endblock content %} {% block script %}
+{% endblock content %} 
+{% block script %}
 <script>
   const modal_t = document.getElementById("createModal");
   const submitBtn = document.querySelector("#submitBtn");
@@ -44,5 +45,15 @@
     nameinput.value = "";
     modal.hide();
   });
+
+  function renameFunc(slug){
+    console.log(slug)
+    const file_dir_name = document.getElementById(`file_dir_${slug}`);
+    const form_name = document.getElementById(`form_${slug}`);
+    file_dir_name.classList.add('d-none')
+  
+   form_name.classList.remove('d-none')
+   form_name.focus()
+  }
 </script>
 {% endblock script %}

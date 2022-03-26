@@ -3,20 +3,24 @@ import os
 from pathlib import Path
 import shutil
 from django.views import View
-from core.utils import (check_data,
+from core.utils import (
+                        check_data,
                         create_file, 
                         create_folder, 
-                        file_or_folder_dict)
+                        file_or_folder_dict
+                        )
 
 cwd = os.getcwd()
 home_path = os.path.join(cwd,'manager')
 os.chdir(home_path)
+
 
 def inHome():
     return home_path == os.getcwd()
 
 
 def home(request):
+
     if request.method=="GET":
         val=check_data()
         context ={"all_data":val,"inHome":inHome()}
@@ -33,6 +37,7 @@ def home(request):
         context ={"all_data":val,"inHome":inHome()}
         return render(request,'core/data.html',context)
 
+
 class GoHome(View):
     def post (self,request):
         os.chdir(home_path)
@@ -40,8 +45,8 @@ class GoHome(View):
         context ={"all_data":val,"inHome":inHome()}
         return render(request,'core/data.html',context)
 
-class GetFolderData(View):
 
+class GetFolderData(View):
     def post(self,request):
         folder = request.POST.get("folder")
         path=os.path.join(os.getcwd(),folder)
@@ -60,10 +65,19 @@ class GoBackFolder(View):
         context ={"all_data":val,"inHome":inHome()}
         return render(request,'core/data.html',context)
 
-class DeleteFileFolder(View):
 
+class RenameFolder(View):
+    def post (self,request):
+        old_name = request.POST.get("old_name")
+        new_name = request.POST.get("new_name")
+        os.rename(old_name,new_name)
+        val=check_data()
+        context ={"all_data":val,"inHome":inHome()}
+        return render(request,'core/data.html',context)
+
+
+class DeleteFileFolder(View):
     def post(self,request):
-        print(request.POST)
         folder = request.POST.get("folder")
         path=os.path.join(os.getcwd(),folder)
         if os.path.isdir(path):

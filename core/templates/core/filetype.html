@@ -1,0 +1,53 @@
+{% load static %}
+
+{% if i.filetype == "python" %}
+<img
+src="{% static 'image/py.png' %}"
+height="60"
+width="60"
+alt="files"
+
+/>
+{% elif i.filetype == "js" %}
+    <img
+    src="{% static 'image/js-file.png' %}"
+    height="60"
+    width="60"
+    alt="files"
+
+  />
+{% elif i.filetype == "sql" %}
+    <img
+    src="{% static 'image/sql.png' %}"
+    height="60"
+    width="60"
+    alt="files"
+
+  />
+{% elif i.filetype == "html" %}
+  <img
+  src="{% static 'image/html-5.png' %}"
+  height="60"
+  width="60"
+  alt="files"
+
+/>
+{% elif i.filetype == "image" %}
+  <img
+  src="{% static i.url %}"
+  height="60"
+  width="60"
+  alt="files"
+
+/>
+
+
+{% else %}
+<img
+src="{% static 'image/file.png' %}"
+height="60"
+width="60"
+alt="files"
+
+/>
+{% endif %}

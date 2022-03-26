@@ -23,16 +23,15 @@ body {
     background: transparent;
     border: none;
     cursor: pointer;
+    outline: 0 !important;
 }
-.sbtn:hover{
-    color:rgb(236, 103, 103);
-}
+
 .icon {
   position: absolute;
   right: -70px;
   color: #333;
   top: -10px;
-  font-size: large;
+  font-size: 25px;
 }
 
 .header {

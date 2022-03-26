@@ -24,50 +24,38 @@
        Go Back
      </li>
        {% endif %}
-       
-
-        
-
       </ol>
     </nav>
-
-
   </div>
 <div  class="row d-flex justify-content-center mt-3">
   {% for i in all_data %}
-  <form
-  
-    class="file-div col-lg-2 col-md-3 col-sm-4 yos"
-
-  >
+  <div class="file-div col-lg-2 col-md-3 col-sm-4 yos">
   <div class="dropdown ">
     <i class="fa fa-ellipsis-v icon " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
 
     <ul style="z-index: 2;" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    
+      <li onclick="renameFunc('{{i.slug}}')" class="dropdown-item" ><i class="fa fa-edit"></i> Rename</li>
+      <li class="dropdown-item">
+        <form action="">
+          <input type="hidden" name="folder" value="{{i.name}}">
+          <i class="fa fa-trash"></i> 
+                <input
+            hx-post="{% url 'delete-folder' %}"
+            hx-trigger="click"
+            hx-target="#home-div"
+            name="name" type="submit" class="sbtn" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </div>
 
-        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Rename</a></li>
-      <li><a class="dropdown-item" href="#"><i class="fa fa-trash"></i> 
-      <input
-      hx-post="{% url 'delete-folder' %}"
-      hx-trigger="click"
-      hx-target="#home-div"
-      name="name" type="text" class="sbtn" value="Delete">
-      </a></li>
-    </ul>
-  </div>
-
-    <input type="hidden" name="folder" value="{{i.name}}" />
     {% if i.type == "file" %}
-    <img
-      src="{% static 'image/file.png' %}"
-      height="60"
-      width="60"
-      alt="files"
-  
-    />
 
+      
+       {% include 'core/filetype.html' %}
     {% else %}
+    <form >
+    <input type="hidden" name="folder" value="{{i.name}}" />
     <img
       src="{% static 'image/folder.png' %}"
       height="60"
@@ -77,9 +65,19 @@
       hx-target="#home-div"
       alt="files"
     />
-    {% endif %}
-    <div class="card-body">{{i.name}}</div>
   </form>
+    {% endif %}
+  
+    <div id="file_dir_{{i.slug}}" class="card-body">{{i.name}}</div>
+    <form
+    hx-post='{% url 'rename-folder' %}'
+    hx-target="#home-div"
+    hx-trigger="submit"
+  >
+    <input type="hidden" name="old_name" value="{{i.name}}"/>
+    <input id="form_{{i.slug}}" name="new_name" class="mt-2 d-none form-control" value="{{i.name}}"/>
+    </form>
+  </div>
   {% endfor %}
 </div>
 </div>
